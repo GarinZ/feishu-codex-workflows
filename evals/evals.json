@@ -1,0 +1,29 @@
+{
+  "skill_name": "opc-project-management",
+  "evals": [
+    {
+      "id": "new-feature-card",
+      "prompt": "In the Platform project, add a device-health summary page with tests and a PR. The user did not mention Feishu.",
+      "expected_output": "The agent locates onboarding and the project source Base, creates one source task card with an acceptance criterion, claims it before implementation, and mirrors it globally after writing the source card.",
+      "files": []
+    },
+    {
+      "id": "continue-existing-pr",
+      "prompt": "Continue fixing the timeout bug from PR #184 and get the test suite green.",
+      "expected_output": "The agent searches for and reuses the card linked to PR #184, updates progress and final test/PR evidence, and does not create a duplicate card.",
+      "files": []
+    },
+    {
+      "id": "no-card-for-answer",
+      "prompt": "Explain why this function returns undefined. Do not modify files.",
+      "expected_output": "The agent provides a read-only explanation and intentionally does not create a Feishu task card.",
+      "files": []
+    },
+    {
+      "id": "preserve-obsolete-history",
+      "prompt": "The migration task is obsolete because its work was merged into another active card. Clean up the board.",
+      "expected_output": "The agent marks the tracked task cancelled or merged with a reason and surviving-card link; it deletes only a verified empty duplicate draft.",
+      "files": []
+    }
+  ]
+}
