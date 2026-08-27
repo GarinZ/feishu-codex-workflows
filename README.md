@@ -4,11 +4,14 @@
 
 本仓库只包含可公开的通用工作流；项目名称、飞书知识库链接、Base token、用户信息、OAuth token、App Secret 和生产凭证都不得提交。
 
-## 可用 Skill
+## 可用 Skills
 
 | Skill | 用途 |
 | --- | --- |
-| [`opc-project-management`](skills/opc-project-management/SKILL.md) | 在开始、继续或结束 feature、bug、重构、运维改动和项目文档改动时，判断是否应创建或更新飞书任务卡，并维护项目内任务来源与全局镜像。 |
+| [`opc-project-discovery`](skills/opc-project-discovery/SKILL.md) | OPC Agent Onboarding 的本地、可执行副本：发现知识库、根项目、子项目资料、项目管理 Base、关联任务及项目文档；也约束新项目的正确目录结构。 |
+| [`opc-feature-lifecycle`](skills/opc-feature-lifecycle/SKILL.md) | 在 feature、bug、重构、运维或文档迭代中，判断卡片是否需要创建/复用/更新/取消，维护来源任务、全局镜像、GitHub 证据和验收状态。 |
+
+两个 Skill 需要配合使用：先用 `opc-project-discovery` 建立可信的项目上下文；再用 `opc-feature-lifecycle` 推进真正的开发工作。若当前 session 已明确确认过项目、子项目、来源 Base 和任务卡，可直接进入后者。
 
 ## 安装到 Codex
 
@@ -16,7 +19,7 @@
 
 ```bash
 npx skills add GarinZ/feishu-codex-workflows \
-  --skill opc-project-management \
+  --skill '*' \
   --agent codex \
   --global \
   --yes \
@@ -39,7 +42,8 @@ lark-cli auth status
 
 ```text
 Codex session
-  -> opc-project-management Skill（分类、找卡、创建/认领/更新）
+  -> opc-project-discovery（定位 OPC 与项目上下文）
+  -> opc-feature-lifecycle（分类、找卡、创建/认领/更新）
   -> 项目内「项目管理」Base（唯一任务来源）
   -> 「全局项目管理」Base（自动维护的汇总镜像）
 ```
@@ -50,6 +54,7 @@ Codex session
 
 - 新增飞书工作流 Skill 时，放在 `skills/<skill-name>/SKILL.md`。
 - 每个写入型 Skill 都必须说明来源数据、镜像规则、身份/权限要求、并发处理与删除策略。
+- 项目资料发现、目录结构和 Onboarding 规则应放入独立的 discovery Skill；不要把它们隐式地散落在 feature Skill 里。
 - 不提交真实的飞书 token、App Secret、项目私有链接、生产地址或仓库密钥。
 - 对工作流行为的实质变化应同时更新相应的 `evals/` 用例。
 

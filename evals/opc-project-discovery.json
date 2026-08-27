@@ -1,0 +1,23 @@
+{
+  "skill_name": "opc-project-discovery",
+  "evals": [
+    {
+      "id": "find-platform-context",
+      "prompt": "I need to investigate a timeout in the Platform project, but I only know it belongs to OPC. Find the correct documents and task Base before changing code.",
+      "expected_output": "The agent reads onboarding, locates the root project, project-management Base, subproject materials, relevant task records, and reports a verified context pack without inventing links or tokens.",
+      "files": []
+    },
+    {
+      "id": "create-new-root-project",
+      "prompt": "Create a new OPC root project for the Analytics Console and organize its project materials correctly.",
+      "expected_output": "The agent creates a root Wiki document node, a child project-management Base, and child subproject materials; it does not create a duplicate root-project row in the subproject table.",
+      "files": []
+    },
+    {
+      "id": "unknown-onboarding-location",
+      "prompt": "Update the task card for a project called Nova, but no OPC document or Base link is available in this session.",
+      "expected_output": "The agent asks for the authoritative onboarding/document location or limits itself to read-only local work instead of guessing tokens, tables, or project mappings.",
+      "files": []
+    }
+  ]
+}
