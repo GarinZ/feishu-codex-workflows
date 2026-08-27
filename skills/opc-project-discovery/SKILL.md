@@ -1,5 +1,6 @@
 ---
 name: opc-project-discovery
+version: 0.3.0
 description: >-
   Use this skill whenever a Codex or other Agent needs to find, understand, create,
   organize, or maintain a project in an OPC Feishu/Lark knowledge base, including when a
@@ -17,6 +18,10 @@ metadata:
 # OPC Project Discovery
 
 Use this Skill to build a trustworthy project context before doing work. It is a local, executable copy of the **stable** parts of OPC Agent Onboarding. The private OPC Onboarding document remains the canonical source for live resource links, current schemas, exceptions, and authorization details.
+
+## Version coherence
+
+This Skill is designed to pair with `opc-feature-lifecycle` from the same release. The project-root `AGENTS.md` should run the managed updater at the start of each new Codex session. If the project instructions report a failed update, a missing companion Skill, or mismatched declared versions, do not make Feishu writes until the pair is repaired or the user explicitly accepts the known local version.
 
 Read [local-onboarding-baseline.md](references/local-onboarding-baseline.md) when entering a new organization, creating a project, or when the hierarchy is unclear.
 

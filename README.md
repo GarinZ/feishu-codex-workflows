@@ -2,6 +2,8 @@
 
 可安装、可版本化的 Agent Skills：帮助 Codex 和其他兼容 Agent 把日常开发工作同步到以飞书文档与多维表格为中心的项目管理体系。
 
+当前稳定版本：[`v0.3.0`](CHANGELOG.md)。`main` 只接收通过仓库校验的稳定版本；发布标签用于审计和回滚。
+
 本仓库只包含可公开的通用工作流；项目名称、飞书知识库链接、Base token、用户信息、OAuth token、App Secret 和生产凭证都不得提交。
 
 ## 可用 Skills
@@ -13,7 +15,9 @@
 
 两个 Skill 需要配合使用：先用 `opc-project-discovery` 建立可信的项目上下文；再用 `opc-feature-lifecycle` 推进真正的开发工作。若当前 session 已明确确认过项目、子项目、来源 Base 和任务卡，可直接进入后者。
 
-## 安装到 Codex
+## 安装到 Codex：不要把 Git clone 当作安装方式
+
+不要让 Agent 用临时 `git clone` 作为 Skill 的运行时来源：那样不会登记来源，也无法可靠执行增量更新。用 `skills` 安装器登记 GitHub 来源；它会在本机记录来源并支持后续 `update`。
 
 在每一台运行 Codex 的开发机器上执行：
 
@@ -38,6 +42,17 @@ npx skills add GarinZ/feishu-codex-workflows \
 lark-cli auth status
 ```
 
+## 保持最新且保证触发
+
+Skill 元数据只能帮助 Codex 选择能力，不能单独构成强制执行。每一个接入 OPC 的代码仓库都必须在根目录放入项目级 `AGENTS.md`：使用 [模板](templates/AGENTS.md.template)，填入该项目的私有 OPC Onboarding URL，并提交到该项目仓库。
+
+该模板做两件事：
+
+1. 每个新的 Codex session 在开始持久性改动前，执行指定的 `skills update`；网络不可用时明确报告并避免自动修改飞书数据。
+2. 强制调用顺序：上下文未确认先用 `opc-project-discovery`，有持久交付物再用 `opc-feature-lifecycle`。
+
+这是刻意的双层设计：安装器解决“版本是否最新”，`AGENTS.md` 解决“什么时候必须调用”。详细操作见 [运行与发布规范](docs/OPERATING_MODEL.md)。
+
 ## 工作模型
 
 ```text
@@ -57,6 +72,7 @@ Codex session
 - 项目资料发现、目录结构和 Onboarding 规则应放入独立的 discovery Skill；不要把它们隐式地散落在 feature Skill 里。
 - 不提交真实的飞书 token、App Secret、项目私有链接、生产地址或仓库密钥。
 - 对工作流行为的实质变化应同时更新相应的 `evals/` 用例。
+- 修改前在分支上运行 `node scripts/validate-skills.mjs`；合并到 `main` 后创建同版本 Git tag 与 Release。
 
 ## 许可证
 

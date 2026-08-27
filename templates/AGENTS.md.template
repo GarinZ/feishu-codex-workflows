@@ -1,0 +1,45 @@
+# Project instructions for Codex
+
+## OPC workflow gate — required for durable work
+
+This repository is managed through the OPC Feishu/Lark knowledge base.
+
+### Authoritative organization context
+
+- OPC Agent Onboarding URL: `<REPLACE_WITH_PRIVATE_OPC_ONBOARDING_URL>`
+- Root project: `<OPTIONAL_PROJECT_NAME_OR_LINK>`
+- Project-specific overrides: `<OPTIONAL_LINK_OR_NOTES>`
+
+Do not commit tokens, App Secrets, cookies, passwords, private keys, or production credentials into this file.
+
+### Refresh the managed Skills once per new Codex session
+
+Before planning or making a durable code, document, infrastructure, task-card, or deployment change, run:
+
+```bash
+npx skills update opc-project-discovery opc-feature-lifecycle --global --yes
+```
+
+If either Skill is absent, bootstrap both from the registered public source:
+
+```bash
+npx skills add GarinZ/feishu-codex-workflows \
+  --skill '*' \
+  --agent codex \
+  --global \
+  --yes \
+  --full-depth
+```
+
+Do not use a raw `git clone` as the runtime installation path. If the managed update fails because networking is unavailable, state that clearly. Continue only with read-only analysis or an explicitly user-approved continuation using the installed pair; do not silently create or alter Feishu task cards with an unknown/stale Skill version.
+
+### Required invocation order
+
+1. Invoke `opc-project-discovery` whenever this session has not verified the OPC Onboarding document, root project, subproject, source task Base, project-material document, or existing task card.
+2. Invoke `opc-feature-lifecycle` for every feature, bug, refactor, operational change, review, deployment, or durable documentation iteration—even if the user does not mention Feishu.
+3. Do not invoke the lifecycle Skill for a direct answer, read-only explanation, or non-durable trivial change.
+4. The project-local task Base is the source of truth; the global Base is only a synchronized overview mirror.
+
+### Session completion
+
+For meaningful work, report the source task status, global-mirror status, evidence (PR/commit/tests/deployment if applicable), and the next action or blocker. Follow repository-specific safety, test, and production-approval rules in addition to this gate.
