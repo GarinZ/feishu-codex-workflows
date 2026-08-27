@@ -21,11 +21,21 @@ npx skills add GarinZ/feishu-codex-workflows \
   --full-depth
 ```
 
-The installation tool records the source and installs the two Skills into the agent’s global skill location. Refresh only these Skills at the start of a new Codex session:
+The installation tool records the source and installs the two Skills into the agent’s global skill location. Refresh only these Skills **before launching** a new Codex session:
 
 ```bash
 npx skills update opc-project-discovery opc-feature-lifecycle --global --yes
 ```
+
+After the update, start a new Codex task/session. Installed capabilities are selected at session startup; do not assume an already-running session will hot-reload its Skill catalog. The same principle appears in the official guidance for plugins, whose added skills are available to new chats, and in the `AGENTS.md` lifecycle, which Codex rebuilds on each run/session. See [Codex plugins](https://learn.chatgpt.com/docs/plugins) and [Codex AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md).
+
+For Codex CLI, this repository includes a launcher that makes the order deterministic:
+
+```bash
+<path-to-feishu-codex-workflows>/scripts/opc-codex "your task prompt"
+```
+
+It refreshes the two Skills and then `exec`s a fresh Codex process. A source checkout can be used for this launcher, but it is not the runtime source of the Skills themselves; the managed installation remains authoritative.
 
 Verify the installed pair when onboarding or troubleshooting:
 
@@ -46,7 +56,7 @@ During project onboarding:
 3. Commit the file with the project so every checkout, worktree, and authorized machine inherits it.
 4. Start a fresh Codex session and ask it to summarize active instructions; confirm that it reports the OPC gate.
 
-The gate requires `opc-project-discovery` when context is unknown and `opc-feature-lifecycle` for durable work. Skill descriptions improve automatic selection, but the `AGENTS.md` rule makes that selection an explicit project policy rather than a best-effort inference.
+The gate requires `opc-project-discovery` when context is unknown and `opc-feature-lifecycle` for durable work. Skill descriptions improve automatic selection, but the `AGENTS.md` rule makes that selection an explicit project policy rather than a best-effort inference. It detects missing/mismatched Skills inside a session; it does not attempt to hot-reload them.
 
 ## 3. Stable release policy
 
@@ -65,6 +75,12 @@ An update failure must not make a coding session silently violate project manage
 - For new Feishu cards, task-state transitions, or document writes, stop and ask for network recovery or explicit approval to proceed with the installed version.
 - Never copy credentials or bypass OAuth merely to make the updater or Lark tooling work.
 
-## 5. Scope boundaries
+## 5. Desktop versus CLI
+
+- **Codex CLI:** use `scripts/opc-codex` or run `npx skills update … && codex …`; the updater runs before process startup.
+- **Codex Desktop:** run the updater in a terminal, then create a new task/session (or restart the app if the installed-skill list has not refreshed). Do not rely on a currently open task to acquire new instructions automatically.
+- **Any environment:** the project-root `AGENTS.md` remains the trigger gate after the new session starts.
+
+## 6. Scope boundaries
 
 This mechanism updates Skills, not project code, task cards, or deployments. A task card still does not authorize production changes. Repository-specific instructions, code review, test policy, and deployment approvals always apply.

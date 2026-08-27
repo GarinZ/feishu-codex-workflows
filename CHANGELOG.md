@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.3.1 — 2026-08-27
+
+- Corrected the update lifecycle: refresh Skills before launching a new Codex session; do not assume a live session hot-reloads them.
+- Added the `scripts/opc-codex` CLI launcher and explicit Desktop/CLI guidance.
+
 ## v0.3.0 — 2026-08-27
 
 - Added a managed-update and trigger model: `VERSION`, matching Skill versions, validation CI, project `AGENTS.md` template, and operating guidance.

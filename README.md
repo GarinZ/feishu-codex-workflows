@@ -2,7 +2,7 @@
 
 可安装、可版本化的 Agent Skills：帮助 Codex 和其他兼容 Agent 把日常开发工作同步到以飞书文档与多维表格为中心的项目管理体系。
 
-当前稳定版本：[`v0.3.0`](CHANGELOG.md)。`main` 只接收通过仓库校验的稳定版本；发布标签用于审计和回滚。
+当前稳定版本：[`v0.3.1`](CHANGELOG.md)。`main` 只接收通过仓库校验的稳定版本；发布标签用于审计和回滚。
 
 本仓库只包含可公开的通用工作流；项目名称、飞书知识库链接、Base token、用户信息、OAuth token、App Secret 和生产凭证都不得提交。
 
@@ -48,10 +48,12 @@ Skill 元数据只能帮助 Codex 选择能力，不能单独构成强制执行�
 
 该模板做两件事：
 
-1. 每个新的 Codex session 在开始持久性改动前，执行指定的 `skills update`；网络不可用时明确报告并避免自动修改飞书数据。
+1. 在**启动新的 Codex session 之前**执行指定的 `skills update`；更新后新开 session，避免假定已经运行的 session 会热加载新 Skill。网络不可用时明确报告并避免自动修改飞书数据。
 2. 强制调用顺序：上下文未确认先用 `opc-project-discovery`，有持久交付物再用 `opc-feature-lifecycle`。
 
 这是刻意的双层设计：安装器解决“版本是否最新”，`AGENTS.md` 解决“什么时候必须调用”。详细操作见 [运行与发布规范](docs/OPERATING_MODEL.md)。
+
+CLI 使用者可以用 [`scripts/opc-codex`](scripts/opc-codex) 作为启动器：它先刷新两个 Skills，再启动一个新的 Codex 进程。
 
 ## 工作模型
 

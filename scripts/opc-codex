@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+npx skills update opc-project-discovery opc-feature-lifecycle --global --yes
+exec codex "$@"

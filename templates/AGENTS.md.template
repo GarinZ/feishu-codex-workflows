@@ -12,9 +12,9 @@ This repository is managed through the OPC Feishu/Lark knowledge base.
 
 Do not commit tokens, App Secrets, cookies, passwords, private keys, or production credentials into this file.
 
-### Refresh the managed Skills once per new Codex session
+### Pre-session Skill refresh — do this before launching Codex
 
-Before planning or making a durable code, document, infrastructure, task-card, or deployment change, run:
+Before launching a Codex session that may make a durable code, document, infrastructure, task-card, or deployment change, run:
 
 ```bash
 npx skills update opc-project-discovery opc-feature-lifecycle --global --yes
@@ -31,6 +31,8 @@ npx skills add GarinZ/feishu-codex-workflows \
   --full-depth
 ```
 
+After the command completes, start a **new** Codex session. Do not run this command inside an already-active session and assume that its available Skills are hot-reloaded.
+
 Do not use a raw `git clone` as the runtime installation path. If the managed update fails because networking is unavailable, state that clearly. Continue only with read-only analysis or an explicitly user-approved continuation using the installed pair; do not silently create or alter Feishu task cards with an unknown/stale Skill version.
 
 ### Required invocation order
@@ -39,6 +41,8 @@ Do not use a raw `git clone` as the runtime installation path. If the managed up
 2. Invoke `opc-feature-lifecycle` for every feature, bug, refactor, operational change, review, deployment, or durable documentation iteration—even if the user does not mention Feishu.
 3. Do not invoke the lifecycle Skill for a direct answer, read-only explanation, or non-durable trivial change.
 4. The project-local task Base is the source of truth; the global Base is only a synchronized overview mirror.
+
+If this session starts without the required pair or discovers that their `version` values differ, stop before any Feishu write. Ask the user to run the pre-session updater and start a new session; do not attempt a hot reload.
 
 ### Session completion
 

@@ -1,6 +1,6 @@
 ---
 name: opc-feature-lifecycle
-version: 0.3.0
+version: 0.3.1
 description: >-
   Use this skill whenever a Codex or other coding Agent is asked to implement, change, fix,
   refactor, investigate, review, test, deploy, or document a feature, bug, iteration, or other
@@ -19,7 +19,7 @@ Use this Skill for work execution, not for discovering the knowledge base. The t
 
 ## Version coherence
 
-Use this Skill only with `opc-project-discovery` from the same release. The project-root `AGENTS.md` is the enforced session gate: it refreshes the managed installation before a durable change and tells Codex when these two Skills are required. If that refresh failed and the task would write Feishu data, report the stale/missing state rather than silently using an unknown mixed version.
+Use this Skill only with `opc-project-discovery` from the same release. The project-root `AGENTS.md` is the enforced session gate: it records the required preflight and tells Codex when these two Skills are required. Run the managed update before launching the session, then start a fresh session so Codex loads the current pair. If the preflight failed and the task would write Feishu data, report the stale/missing state rather than silently using an unknown mixed version.
 
 ## What this Skill owns
 
