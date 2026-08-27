@@ -1,6 +1,6 @@
 ---
 name: opc-feature-lifecycle
-version: 0.3.1
+version: 0.3.2
 description: >-
   Use this skill whenever a Codex or other coding Agent is asked to implement, change, fix,
   refactor, investigate, review, test, deploy, or document a feature, bug, iteration, or other
@@ -52,11 +52,12 @@ An empty duplicate draft with no owner, comment, link, history, work, or code re
 ## 2. Preflight and claim
 
 1. Confirm the target subproject and read its project-material document for goal, scope, constraints, important links, and acceptance criteria.
-2. Read the source Base table/field structure before writing. Use actual field names and option values; never guess them.
-3. Search for matching records and check whether another executor is actively recorded.
-4. If another live executor owns the same card, do not overwrite it. Report the conflict and ask whether to split, coordinate, or take over.
-5. For a new task, write a concise, testable title plus the local equivalent of subproject, status, priority, type, acceptance criterion, and known references.
-6. When work begins, change the source card to the active equivalent of `进行中` and record executor, Codex task/session, or branch when the schema supports it.
+2. Confirm that the repository root contains the OPC workflow gate in `AGENTS.md`. If it is absent or incomplete, return to `opc-project-discovery` to bootstrap it before claiming new Feishu work.
+3. Read the source Base table/field structure before writing. Use actual field names and option values; never guess them.
+4. Search for matching records and check whether another executor is actively recorded.
+5. If another live executor owns the same card, do not overwrite it. Report the conflict and ask whether to split, coordinate, or take over.
+6. For a new task, write a concise, testable title plus the local equivalent of subproject, status, priority, type, acceptance criterion, and known references.
+7. When work begins, change the source card to the active equivalent of `进行中` and record executor, Codex task/session, or branch when the schema supports it.
 
 ## 3. Implement in a normal engineering loop
 

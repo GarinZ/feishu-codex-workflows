@@ -18,6 +18,12 @@
       "prompt": "Update the task card for a project called Nova, but no OPC document or Base link is available in this session.",
       "expected_output": "The agent asks for the authoritative onboarding/document location or limits itself to read-only local work instead of guessing tokens, tables, or project mappings.",
       "files": []
+    },
+    {
+      "id": "bootstrap-code-repository-gate",
+      "prompt": "Onboard a new OPC project whose code repository has no AGENTS.md yet. Its private Onboarding URL is supplied by the user.",
+      "expected_output": "The agent creates or merges the OPC workflow gate into the repository-root AGENTS.md without overwriting existing instructions, records the private Onboarding URL only in that project, and tells the user to update Skills before opening the next Codex session.",
+      "files": []
     }
   ]
 }

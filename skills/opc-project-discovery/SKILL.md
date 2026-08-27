@@ -1,6 +1,6 @@
 ---
 name: opc-project-discovery
-version: 0.3.1
+version: 0.3.2
 description: >-
   Use this skill whenever a Codex or other Agent needs to find, understand, create,
   organize, or maintain a project in an OPC Feishu/Lark knowledge base, including when a
@@ -51,6 +51,16 @@ OPC Wiki
 3. Read the Onboarding document before the first Feishu write in a new session. It supplies live URLs, project-specific rules, field names, and scope expectations that cannot live in this public Skill.
 4. If the Onboarding location or resource access is absent, do not guess tokens or fabricate a Base mapping. Ask the user or limit work to local read-only inspection.
 
+## Code-repository bootstrap
+
+When onboarding or creating a project that has a code repository, make the project-root `AGENTS.md` part of the setup—not an optional follow-up. Read [project-agents-gate.md](references/project-agents-gate.md), then merge its OPC gate into the repository’s existing `AGENTS.md` or create that file when absent.
+
+1. Fill the project’s private OPC Onboarding URL and verified non-secret project context.
+2. Preserve existing repository instructions; never overwrite unrelated guidance.
+3. Commit the resulting `AGENTS.md` with the project when repository policy permits, so worktrees and other authorized machines inherit it.
+4. Tell the user that Skills must be refreshed before the **next** Codex session and that the new session should be used for implementation.
+5. If the repository is read-only or the Onboarding URL is unknown, report the missing gate instead of silently claiming the project is onboarded.
+
 ## Discovery protocol
 
 ### 1. Find OPC and the root project
@@ -97,6 +107,7 @@ When the user explicitly asks to create a root project:
 3. Create/reuse `项目管理` underneath that node.
 4. Create a subproject record only for an independently manageable subproject, then create its single project-material document and link it from the record.
 5. Create research, architecture, operations, and retrospective documents as children of the correct root project—not in personal Drive.
+6. For code-bearing projects, complete the code-repository bootstrap above before calling the onboarding complete.
 
 When maintaining documents:
 

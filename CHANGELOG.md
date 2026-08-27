@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.3.2 — 2026-08-27
+
+- Makes the project-root `AGENTS.md` gate a required part of discovery/onboarding for code-bearing projects.
+- Bundles the gate reference inside `opc-project-discovery`, so an installed Skill can bootstrap a repository without relying on a source checkout.
+
 ## v0.3.1 — 2026-08-27
 
 - Corrected the update lifecycle: refresh Skills before launching a new Codex session; do not assume a live session hot-reloads them.
